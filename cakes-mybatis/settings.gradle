@@ -1,0 +1,12 @@
+rootProject.name = 'cakes-mybatis'
+include 'basis-xml'
+include 'basis-annotation'
+include 'crud-xml'
+include 'crud-annotation'
+include 'transaction-xml'
+include 'transaction-annotation'
+include 'multiple-tables'
+include 'basis-helloworld'
+include 'basis-normal'
+include 'commons'
+

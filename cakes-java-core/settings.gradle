@@ -1,0 +1,15 @@
+rootProject.name = 'cakes-java-core'
+
+include 'jdbc'
+include 'io'
+include 'socket'
+include 'thread'
+include 'collections'
+include 'reflect'
+include 'nio'
+include 'exception'
+include 'java8'
+include 'basis'
+include 'string'
+include 'date'
+

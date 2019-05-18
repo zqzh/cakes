@@ -1,0 +1,42 @@
+allprojects {
+    group = 'com.cbooy.cakes'
+    version = '1.0.0-SNAPSHOT'
+    buildDir = 'target'
+
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'maven'
+}
+
+subprojects {
+    sourceCompatibility = 1.8
+
+    targetCompatibility = 1.8
+
+    repositories {
+        mavenLocal()
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        mavenCentral()
+    }
+
+    idea {
+        module {
+            downloadSources = true
+            downloadJavadoc = false
+            sourceDirs += file('src/main/resources')
+        }
+    }
+
+    configurations {
+        deployerJars
+    }
+
+    dependencies {
+        compile('com.google.guava:guava:27.0.1-jre')
+        compile('org.apache.commons:commons-lang3:3.8.1')
+        compile('junit:junit:4.12')
+        compile('ch.qos.logback:logback-core:1.2.3')
+        compile('ch.qos.logback:logback-classic:1.2.3')
+        compile('org.projectlombok:lombok:1.18.4')
+    }
+}
