@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
-import mybatis.domain.QueryTransVO;
 import mybatis.domain.Trans;
 import mybatis.mapper.TransMapper;
 import org.apache.ibatis.io.Resources;
@@ -34,8 +33,8 @@ public class App {
     Trans trans = new Trans();
     trans.setTrans_id(System.currentTimeMillis() + "");
     trans.setAmount(1024L);
-    trans.setBody("其他交易");
-    trans.setSubject("支付");
+    trans.setBody("其他交易-anno");
+    trans.setSubject("支付-anno");
     trans.setCreate_time(new Date());
 
     int effectRows = transMapper.insertTrans(trans);
@@ -46,37 +45,14 @@ public class App {
   }
 
   /**
-   * 插入并返回id测试
-   */
-  @Test
-  public void testInsertAndIdReturn() {
-    Trans trans = new Trans();
-    trans.setTrans_id(System.currentTimeMillis() + "");
-    trans.setAmount(1024L);
-    trans.setBody("其他交易-id");
-    trans.setSubject("支付-id");
-    trans.setCreate_time(new Date());
-
-    System.out.println("before insert:" + trans);
-
-    int effectRows = transMapper.insertTransAndIdReturn(trans);
-
-    System.out.println("after insert:" + trans);
-
-    sqlSession.commit();
-
-    System.out.println("insert trans ,and effect rows =" + effectRows);
-  }
-
-  /**
    * 修改测试
    */
   @Test
   public void testUpdate() {
     Trans trans = new Trans();
-    trans.setTrans_id("1558017429079");
+    trans.setTrans_id("1558165532576");
     trans.setAmount(2048L);
-    trans.setBody("其他交易");
+    trans.setBody("其他交易-annotation");
     trans.setSubject("支付");
 
     int effectRows = transMapper.updateTrans(trans);
@@ -91,7 +67,7 @@ public class App {
    */
   @Test
   public void testDelete() {
-    int effectRows = transMapper.deleteTransById(7L);
+    int effectRows = transMapper.deleteTransById(8L);
 
     sqlSession.commit();
 
@@ -129,22 +105,6 @@ public class App {
   }
 
   /**
-   * 查询条包装
-   */
-  @Test
-  public void testSelectByQueryVO() {
-    Trans trans = new Trans();
-    trans.setBody("其他交易");
-    trans.setSubject("支付");
-
-    QueryTransVO queryTransVO = new QueryTransVO();
-    queryTransVO.setTrans(trans);
-
-    List<Trans> transes = transMapper.selectByQueryVO(queryTransVO);
-    transes.forEach(System.out::println);
-  }
-
-  /**
    * 查询全部
    */
   @Test
@@ -172,5 +132,4 @@ public class App {
     sqlSession.close();
     inputStream.close();
   }
-
 }

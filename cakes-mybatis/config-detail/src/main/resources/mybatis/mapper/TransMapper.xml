@@ -6,6 +6,17 @@
 <!-- namespace要与对应接口的全限定名保持一致 -->
 <mapper namespace="mybatis.mapper.TransMapper">
 
+  <!--
+    insert标签详解:
+      id: 标识,与mapper接口方法名一致
+
+      parameterType: 参数类型
+        基本数据类型: int,                long,           boolean,           float,           double
+        包装数据类型: java.lang.Integer,  java.lang.Long, java.lang.Boolean, java.lang.Float, java.lang.Double
+        自定义类型:   mybatis.domain.Trans
+
+      keyColumn="" keyProperty="" databaseId="" flushCache="" parameterMap="" statementType="" timeout="" useGeneratedKeys=""
+  -->
   <insert id="insertTrans" parameterType="mybatis.domain.Trans">
     INSERT INTO `trans`(`trans_id`, `body`, `subject`, `amount`, `create_time`) VALUES (#{trans_id}, #{body}, #{subject}, #{amount}, #{create_time})
   </insert>
