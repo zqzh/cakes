@@ -5,8 +5,42 @@
 
 <!-- 配置的根节点 -->
 <configuration>
-  
-  <!-- 环境配置 -->
+
+  <!--
+    用于引入外部资源配置
+      resource: 指定资源路径和名,常用的一种,一般用于数据库的配置信息
+   -->
+  <properties resource="db.properties"/>
+
+  <settings>
+    <setting name="" value=""/>
+  </settings>
+
+
+  <typeHandlers ></typeHandlers>
+
+  <!--
+    类型别名
+      type : 自定义的类型全限定类名
+      alias: 别名名称
+  -->
+  <typeAliases>
+
+    <!-- 此种形式适合少量的配置 -->
+    <!-- <typeAlias type="mybatis.domain.Trans" alias="trans"/> -->
+
+    <!--
+      当有很多类需要配置别名时就需要使用一种很简便的形式
+        name: 包名
+        此包中的实体类都会被注册别名,且类型即别名,不区分大小写
+     -->
+    <package name="mybatis.domain"/>
+  </typeAliases>
+
+  <!--
+    环境配置
+      default: 默认的环境配置,此时只有一个dev
+   -->
   <environments default="dev">
 
     <!-- 开发环境:可以配置多个environment节点,用于维护多套环境 -->
@@ -18,16 +52,20 @@
 
       <!-- 配置数据源,取值有三个,POOLED:池 -->
       <dataSource type="POOLED">
-        <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://127.0.0.1:3306/mybatis?useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull"/>
-        <property name="username" value="root"/>
-        <property name="password" value="123456"/>
+        <property name="driver" value="${driver}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${username}"/>
+        <property name="password" value="${password}"/>
       </dataSource>
     </environment>
   </environments>
 
   <!-- 指定映射的Mapper类 -->
   <mappers>
-    <mapper resource="mybatis/mapper/TransMapper.xml"/>
+    <!--  适用于少量的配置  -->
+    <!-- <mapper resource="mybatis/mapper/TransMapper.xml"/> -->
+
+    <!-- 适用于很多Mapper配置,此时指定Mapper接口所在的包,则不再需要resources或class,会自行关联所有的配置 -->
+    <package name="mybatis.mapper"/>
   </mappers>
 </configuration>

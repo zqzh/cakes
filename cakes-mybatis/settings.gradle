@@ -7,7 +7,6 @@ include 'transaction-xml'
 include 'transaction-annotation'
 include 'multiple-tables'
 include 'basis-helloworld'
-include 'main-flow'
 include 'commons'
 include 'config-detail'
 

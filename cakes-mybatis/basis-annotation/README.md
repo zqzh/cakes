@@ -4,7 +4,15 @@
 ---
 
 ### 1.初始化
-* SQL
+* 新建工程并导入gradle依赖
+```groovy
+dependencies {
+    compile('org.mybatis:mybatis:3.5.1')
+    compile('mysql:mysql-connector-java:8.0.13')
+}
+```
+
+* SQL脚本
 ```sql
 CREATE DATABASE mybatis;
 
@@ -29,6 +37,7 @@ VALUES ('10011000', '微信交易', '支付', 512),
        ('10011003', '微信交易', '支付', 4096);
 ```
 
+### 2.ORM
 * 实体类,mybatis.domain.Trans
 ```java
 public class Trans {
@@ -43,19 +52,22 @@ public class Trans {
 }
 ```
 
-### 2.Mapper接口
-* mybatis.mapper.TransMapper
-* 注解: @Select
+* mybatis.mapper.TransMapper接口
 ```java
 public interface TransMapper {
-
+  
+  /**
+   * 注解@Select执行查询
+   * 
+   * @return 
+   */
   @Select("select * from trans")
   List<Trans> selectAll();
 }
 ```
 
-### 3.SqlMapConfig.xml
-* 主要是mapper标签的资源不再是resource,而是变为了class
+### 3.建立MyBatis全局配置文件SqlMapConfig.xml
+* 主要是mapper标签的资源不再是resource,而是**变为了class**
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE configuration

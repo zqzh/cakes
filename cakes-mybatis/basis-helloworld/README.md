@@ -3,8 +3,8 @@
 
 ---
 
-### 1.新建工程并导入依赖
-* gradle 依赖
+### 1.初始化
+* 新建工程并导入gradle依赖
 ```groovy
 dependencies {
     compile('org.mybatis:mybatis:3.5.1')
@@ -12,7 +12,6 @@ dependencies {
 }
 ```
 
-### 2.新建SQL脚本并创建数据库&表
 * SQL脚本
 ```sql
 CREATE DATABASE mybatis;
@@ -38,7 +37,7 @@ VALUES ('10011000', '微信交易', '支付', 512),
        ('10011003', '微信交易', '支付', 4096);
 ```
 
-### 3.建立对应实体
+### 2.ORM
 * 实体类mybatis.domain.Trans
 ```java
 public class Trans {
@@ -51,7 +50,6 @@ public class Trans {
 }
 ```
 
-### 4.创建Mapper接口
 * mybatis.mapper.TransMapper接口
 ```java
 public interface TransMapper {
@@ -88,7 +86,7 @@ public class TransMapperImpl implements TransMapper {
 
 ```
 
-### 5.建立MyBatis全局配置文件SqlMapConfig.xml
+### 3.建立MyBatis全局配置文件SqlMapConfig.xml
 * resource/SqlMapConfig.xml
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -128,7 +126,7 @@ public class TransMapperImpl implements TransMapper {
 
 ```
 
-### 6.在resources下新建Mapper.xml文件
+### 4.在resources下新建Mapper.xml文件
 * resource/mapper/TransMapper.xml
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -144,7 +142,7 @@ public class TransMapperImpl implements TransMapper {
 </mapper>
 ```
 
-### 7.Main程序
+### 5.Main程序
 * 基于配置文件获取
 ```java
 package mybatis;
