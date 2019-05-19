@@ -4,7 +4,15 @@
 ---
 
 ### 1.初始化
-* SQL
+* 新建工程并导入gradle依赖
+```groovy
+dependencies {
+    compile('org.mybatis:mybatis:3.5.1')
+    compile('mysql:mysql-connector-java:8.0.13')
+}
+```
+
+* SQL脚本
 ```sql
 CREATE DATABASE mybatis;
 
@@ -29,6 +37,7 @@ VALUES ('10011000', '微信交易', '支付', 512),
        ('10011003', '微信交易', '支付', 4096);
 ```
 
+### 2.ORM
 * 实体: mybatis.domain.Trans
 ```java
 public class Trans {
@@ -43,33 +52,14 @@ public class Trans {
 }
 ```
 
-* Mapper接口,mybatis.mapper.TransMapper
+* mybatis.mapper.TransMapper接口
 ```java
 public interface TransMapper {
   List<Trans> selectAll();
 }
 ```
 
-### 2.TransMapper.xml
-* 位置: resources/mybatis/mapper/BasisXmlMapper.xml
-* 路径层级和命名要与mybatis.mapper.BasisXmlMapper保持一致
-```xml
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
-<!-- namespace要与对应接口的全限定名保持一致 -->
-<mapper namespace="mybatis.mapper.TransMapper">
-
-  <!-- id要与接口中的方法名保持一致 -->
-  <select id="selectAll" resultType="mybatis.domain.Trans">
-    select * from trans;
-  </select>
-</mapper>
-```
-
-### 3.SqlMapConfig.xml
+### 3.建立MyBatis全局配置文件SqlMapConfig.xml
 * 位置: resources/SqlMapConfig.xml
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -108,7 +98,26 @@ public interface TransMapper {
 
 ```
 
-### 4.Main程序
+### 4.在resources下新建Mapper.xml文件
+* 位置: resources/mybatis/mapper/TransMapper.xml
+* 路径层级和命名要与mybatis.mapper.TransMapper保持一致
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace要与对应接口的全限定名保持一致 -->
+<mapper namespace="mybatis.mapper.TransMapper">
+
+  <!-- id要与接口中的方法名保持一致 -->
+  <select id="selectAll" resultType="mybatis.domain.Trans">
+    select * from trans;
+  </select>
+</mapper>
+```
+
+### 5.Main程序
 ```java
 package mybatis;
 
@@ -158,19 +167,19 @@ public class App {
 
 ```
 
-### 5.关键配置说明
+### 6.关键配置说明
 
-##### 5.1 不在有MapperImpl类
+##### 6.1 不在有MapperImpl类
 * 即诸如TransMapperImpl已经不需要
 * 为达到不写此实现类的效果,需遵守MyBatis的几条约定,进而可以减少一些必要的操作
 * 即:约定大于配置
 
-##### 5.2 Mapper.xml在resources下的路径要与Mapper接口的包名结构一致
+##### 6.2 Mapper.xml在resources下的路径要与Mapper接口的包名结构一致
 * 即: mybatis.mapper.TransMapper.java
 * 即: mybatis/mapper/TransMapper.xml
 * 若路径不一致将会报错
 
-##### 5.3 Mapper.xml文件中的namespace要与对应接口的类全限定名保持一致
+##### 6.3 Mapper.xml文件中的namespace要与对应接口的类全限定名保持一致
 * 即: namespace="mybatis.mapper.TransMapper
 * 类: mybatis.mapper.TransMapper.java
 * 若不一致则报错
@@ -178,18 +187,18 @@ public class App {
 org.apache.ibatis.binding.BindingException: Type interface mybatis.mapper.TransMapper is not known to the MapperRegistry.
 ```
 
-##### 5.4 select标签的id名称要与接口的方法名保持一致
+##### 6.4 select标签的id名称要与接口的方法名保持一致
 * 即,select id="selectAll"
 * 即,BasisXmlMapper, selectAll();
 
-### 6.MyBatis执行流程梳理
+### 7.MyBatis执行流程梳理
 
-##### 6.1 SqlSessionFactoryBuilder解析SqlMapConfig.xml成org.apache.ibatis.session.Configuration对象
+##### 7.1 SqlSessionFactoryBuilder解析SqlMapConfig.xml成org.apache.ibatis.session.Configuration对象
 * 使用MyBatis提供的org.apache.ibatis.io.Resources类将文件转成输入流
 * 解析出SqlMapConfig.xml文件中配置的数据库连接信息,连接池类型,事务类型等
 * 封装Mapper对象组装成一个Map(key=namespace+id, value=Mapper)
 
-##### 6.2 SqlSessionFactoryBuilde基于解析后的Configuration对象创建SqlSessionFactory
+##### 7.2 SqlSessionFactoryBuilde基于解析后的Configuration对象创建SqlSessionFactory
 * return new DefaultSqlSessionFactory(config);
 ```java
 public class DefaultSqlSessionFactory implements SqlSessionFactory {
@@ -202,10 +211,10 @@ public class DefaultSqlSessionFactory implements SqlSessionFactory {
 }
 ```
 
-##### 6.3 SqlSessionFactory(实例DefaultSqlSessionFactory)基于Configuration中数据库连接信息创建SqlSession实例
+##### 7.3 SqlSessionFactory(实例DefaultSqlSessionFactory)基于Configuration中数据库连接信息创建SqlSession实例
 * public SqlSession openSession()
 
-##### 6.4 SqlSession的主功能
+##### 7.4 SqlSession的主功能
 * 在执行功能之前,需要先拿到SQL语句和数据库连接信息
 * 功能点一: 生成接口代理对象
   - sqlSession.getMapper(xxxMapper.class);
@@ -220,5 +229,5 @@ public class DefaultSqlSessionFactory implements SqlSessionFactory {
   - 基于Configuration对象创建Connection对象
   - 使用jdbc的Connection对象完成对应的CRUD操作
 
-##### 6.5 封装结果集
+##### 7.5 封装结果集
 * 基于xml中定义的result* 进行封装
