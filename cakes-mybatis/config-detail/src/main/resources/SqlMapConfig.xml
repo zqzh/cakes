@@ -17,7 +17,7 @@
   </settings>
 
 
-  <typeHandlers ></typeHandlers>
+  <typeHandlers></typeHandlers>
 
   <!--
     类型别名
@@ -50,7 +50,11 @@
       <transactionManager type="JDBC">
       </transactionManager>
 
-      <!-- 配置数据源,取值有三个,POOLED:池 -->
+      <!--
+        配置数据源
+          type: 连接池类型,取值有三个,POOLED:池,UNPOOLED:非池,JNDI:
+          POOLED, 实现java.sql.Datasource接口规范
+       -->
       <dataSource type="POOLED">
         <property name="driver" value="${driver}"/>
         <property name="url" value="${url}"/>

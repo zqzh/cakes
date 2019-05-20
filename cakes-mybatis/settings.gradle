@@ -9,4 +9,5 @@ include 'multiple-tables'
 include 'basis-helloworld'
 include 'commons'
 include 'config-detail'
+include 'connection-pool'
 
