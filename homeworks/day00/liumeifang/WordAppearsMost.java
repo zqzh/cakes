@@ -43,6 +43,7 @@ public class WordAppearsMost {
                 }
             }
             int_list.add(m);
+            m = 0;
         }
 
         max_int = Collections.max(int_list);
