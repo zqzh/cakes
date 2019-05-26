@@ -13,9 +13,10 @@ import java.io.FileNotFoundException;
 public class Comments {
 
   public static void main(String[] args) throws FileNotFoundException {
-    int i = 0; // 就是定义个变量而已,尾注释有啥的
+    int i = 0;  // 就是定义个变量而已,尾注释有啥的
 
-    BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(new File("/etc/profile")));   // 我靠,我这段信息可是很重要啊
+	// 我靠,我这段信息可是很重要啊
+    BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(new File("/etc/profile")));   
   }
 
 }

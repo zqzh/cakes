@@ -1,7 +1,7 @@
 package core;
 
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import org.junit.Test;
 
@@ -26,7 +26,7 @@ public class CakesString {
     String str2 = null;
 
     // 定义, 并初始化为空串
-    String str3 = "";
+    String str3 = "hello world";
 
     // new 空串
     String str4 = new String();
@@ -40,7 +40,7 @@ public class CakesString {
     System.out.println("str6=" + str6);
 
     // 在char数组中切片,从0开始,切3个长度,即:hel
-    final String str7 = new String(chars, 0, 3);
+    final String str7 = new String(chars, 2, 3);
     System.out.println("str7=" + str7);
 
     int[] codePoints = new int[]{97, 98, 99, 100, 101};
@@ -51,7 +51,9 @@ public class CakesString {
     final String str9 = new String(val.getBytes());
     System.out.println("str9 = " + str9);
 
-    final String str10 = new String(val.getBytes("UTF-8"), 0, val.length(), Charset.forName("GBK"));
+    final String str10 = new String(
+        val.getBytes("UTF-8"),
+        StandardCharsets.UTF_8);
     System.out.println("str10 = " + str10);
   }
 
@@ -60,15 +62,30 @@ public class CakesString {
    */
   @Test
   public void valueof() {
-    String.valueOf(1024);
-    String.valueOf(1024L);
+    // 定义字符串
+    String str = "hello world";
+
+    // int & Integer 转 String
+    Integer num1 = 1024;
+    int num2 = num1;
+    String intValue = String.valueOf(num2);
+    System.out.println(intValue);
+
+    // long & Long 转String的操作
+    Long num3 = 5689087678L;
+    long num4 = num3;
+    String longValue = String.valueOf(num4);
+    System.out.println(longValue);
+
+    // float(Float) & double(Double) 转String,
     String.valueOf(10.24F);
     String.valueOf(10.24D);
-    String.valueOf(false);
-    String.valueOf('a');
-    String.valueOf(new Object());
-    String.valueOf(new byte[]{1, 2, 3, 4});
-    String.valueOf(new char[]{'a', 'b', 'c', 'd'});
+
+    // String.valueOf(false);
+    // String.valueOf('a');
+    // String.valueOf(new Object());
+    // String.valueOf(new byte[]{1, 2, 3, 4});
+    // String.valueOf(new char[]{'a', 'b', 'c', 'd'});
   }
 
   /**

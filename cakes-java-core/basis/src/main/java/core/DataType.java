@@ -131,16 +131,28 @@ public class DataType {
    * 8.
    *
    * Integer的缓存
+   *
+   * -XX:AutoBoxCacheMax=256
    */
   @Test
   public void integerCache() {
     Integer i1 = 128;
     Integer i2 = 128;
+
+    // false
     System.out.println(i1 == i2);
 
     Integer i3 = 127;
     Integer i4 = 127;
+
+    // true
     System.out.println(i3 == i4);
+
+    Integer i5 = 257;
+    Integer i6 = 257;
+
+    // true
+    System.out.println(i6 == i5);
   }
 
 

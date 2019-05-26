@@ -130,28 +130,43 @@ private static class IntegerCache {
 ### 4.字符串
 > core.CakesString
 
-##### 4.1 String内部结构说明
+#### 4.1 String内部结构说明
 * private final char value[];
     - String内部实际就是字节数组
     
-##### 4.2 String&StringBuilder&StringBuffer区别
-* 应用:
-    - String: 
-        + Java中字符串类,被修饰为final,因此是不可变数值的类,也不可被继承.
-        + 进而其相关操作,如截取,剪切,拼接等都是产生新的String
-    - StringBuffer: 
-        + 当大量的String进行拼接时会产生大量的对象,为姐姐此问题则引入了StringBuffer
-        + StringBuffer本质是一个线程安全的可修改的字符序列,为保证其线程的安全必定会损失一定的性能开销
-        + 所有方法都带有 synchronized 关键字修饰
-    - StringBuilder:
-        + jdk1.5新增,功能与StringBuffer一致,只是去掉了线程安全的实现部分,进而可提升其性能
-* 设计
-    - String:
-        + 由于其实现是不可变的(Immutable),进而原生支持线程安全,因为String对象一但建立就不可在修改.
-        + 引申: java8的 LocalDateTime
-    - StringBuffer与StringBuilder:
-        + 均继承自AbstractStringBuilder
-        + 实现方法除Buffer的所有方法使用了synchronized外,无其他区别
-        + 内部使用char数组做数据接收
-            * class AbstractStringBuilder # char[] value;
+#### 4.2 String&StringBuilder&StringBuffer区别
+##### 应用:
+* String: 
+    + Java中字符串类,被修饰为final,因此是不可变数值的类,也不可被继承.
+    + 进而其相关操作,如截取,剪切,拼接等都是产生新的String
+* StringBuffer: 
+    + 当大量的String进行拼接时会产生大量的对象,为姐姐此问题则引入了StringBuffer
+    + StringBuffer本质是一个线程安全的可修改的字符序列,为保证其线程的安全必定会损失一定的性能开销
+    + 所有方法都带有 synchronized 关键字修饰
+** StringBuilder:
+    + jdk1.5新增,功能与StringBuffer一致,只是去掉了线程安全的实现部分,进而可提升其性能
+
+##### 设计
+* String:
+    - 由于其实现是不可变的(Immutable),进而原生支持线程安全,因为String对象一但建立就不可在修改.
+    - 引申: java8的 LocalDateTime
+* StringBuffer与StringBuilder:
+    - 均继承自AbstractStringBuilder
+    - 实现方法除Buffer的所有方法使用了synchronized外,无其他区别
+    - 内部使用char数组做数据接收
+        + class AbstractStringBuilder # char[] value;
+        + 默认大小是16,若超过16之后,会触发数组的扩容,arrayCopy,会有性能开销
+        + 因此若能预估大小,尽量做到设定预期值,避免扩容
+
+##### 扩展
+* 即使尽量减少了拼接带来的大量字符串对象的产生,但是程序内依旧还有很多重复的字符串,要怎么解决呢? 使用**缓存机制 **
+    - intern()方法,告知jvm将字符串缓存起来共用!
+        + jdk1.6时不建议使用此方法,因为这个缓存的动作将将对象存储在PermGen(永久代),其空间有限,很难被gc,弄不好就容易造成OOM
+        + 1.6之后的版本将此缓存至于堆中,大小为60013
+            * 查看数值的参数配置: -XX:+PrintStringTableStatistics
+            * 配置缓存的大小: -XX:StringTableSize=1024
+            * 缺点: 程序员自己手动显示调用,很难把控好
+    - jdk1.8 8u20之后,增加了一个新特性,G1 GC字符串排重
+        + 将相同数据的字符串指向同一份数据来做到的,JVM底层提供支持
+        + 此功能默认关闭,开启: -XX:UseStringDuplication, 前提: 使用G1 GC
 
