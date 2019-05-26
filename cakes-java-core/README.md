@@ -2,13 +2,10 @@
 
 ---
 
-## x.JDBC
-> jdbc
+### 1.Java程序基本设计结构
+> cakes-java-core/basis
 
-### SQL文件
-* jdbc/sql/tables.sql
-
-### jdbc基础
-> package jdbc.basis
-
-### 
+* 注释
+* 数据类型
+* 运算符
+* 
