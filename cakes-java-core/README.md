@@ -2,10 +2,9 @@
 
 ---
 
-### 1.Java程序基本设计结构
+### 1.程序基本设计结构
 > cakes-java-core/basis
 
-* 注释
-* 数据类型
-* 运算符
-* 
+### 2.面向对象设计
+> cakes-java-core/oop
+

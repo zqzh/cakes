@@ -9,6 +9,40 @@ import org.junit.Test;
  */
 public class Operator {
 
+  @Test
+  public void normal() {
+    // + - * / %
+    // int num1 = 1024;
+    // int num2 = 1024;
+    //
+    // int result = num1 + num2;
+    // result = num1 - num2;
+    // result = num1 * num2;
+    // result = num1 / num2;
+    // int orderId = 342234234;
+    // int dbId = orderId % 8;
+    // System.out.println("dbId = " + dbId);
+
+    // && || !
+
+    // 短路
+    // boolean flag1 = true;
+    // boolean flag2 = false;
+    // System.out.println("(flag1||flag2) = " + (flag1 || flag2));
+    // System.out.println("(flag1&&flag2) = " + (flag1 && flag2));
+    // if (flag1 || flag2) {
+    //   System.out.println("进入");
+    // }
+
+    // boolean flag1 = true;
+    // boolean flag2 = false;
+    // boolean flag3 = false;
+    // boolean flag4 = false;
+    // if (flag1 && flag2 && flag3 || flag4) {
+    //
+    // }
+  }
+
   /**
    * ++i 与 i++的区别
    */
@@ -27,7 +61,7 @@ public class Operator {
      9: invokevirtual #3                  // Method java/io/PrintStream.println:(I)V
      12: return
      */
-    System.out.println(num++);
+    // System.out.println(num++);
 
     /**
      Code:
